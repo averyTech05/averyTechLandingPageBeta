@@ -1,3 +1,40 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // Handle navbar links
+  document.querySelectorAll("nav a").forEach((anchor) => {
+    anchor.addEventListener("click", smoothScroll);
+  });
+
+  // Handle logo click
+  document.getElementById("logo").addEventListener("click", smoothScroll);
+
+  // Handle contact us button click
+  document
+    .getElementById("contactButton")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      document.querySelector("#contact").scrollIntoView({
+        behavior: "smooth",
+      });
+    });
+});
+
+function smoothScroll(e) {
+  e.preventDefault();
+  var href = this.getAttribute("href");
+
+  if (href === "#") {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  } else {
+    var cleanedHref = href.replace(/^\//, "");
+    document.querySelector(cleanedHref).scrollIntoView({
+      behavior: "smooth",
+    });
+  }
+}
+
 var swiper1 = new Swiper(".heroSwiper", {
   // Optional parameters
   direction: "horizontal",
@@ -6,6 +43,11 @@ var swiper1 = new Swiper(".heroSwiper", {
   effect: "coverflow",
   grabCursor: true,
   centeredSlides: true,
+  loop: true,
+  autoplay: {
+    delay: 4000,
+    disableOnInteraction: false,
+  },
 
   // Navigation arrows
   navigation: {
@@ -83,6 +125,12 @@ var swiper3 = new Swiper(".company-swiper", {
   effect: "coverflow",
   grabCursor: true,
   centeredSlides: true,
+  loop: true,
+  autoplay: false,
+  autoplay: {
+    delay: 950,
+    disableOnInteraction: true,
+  },
   coverflowEffect: {
     rotate: 0,
     stretch: 0,
@@ -96,7 +144,6 @@ var swiper3 = new Swiper(".company-swiper", {
     thresholdDelta: 70,
   },
   spaceBetween: 30,
-  loop: false,
   breakpoints: {
     640: {
       slidesPerView: 2,
@@ -107,8 +154,22 @@ var swiper3 = new Swiper(".company-swiper", {
   },
 });
 
-swiper.slideTo(1, false, false);
-
+var swiper2 = new Swiper(".infra-swiper", {
+  effect: "creative",
+  pagination: {
+    el: ".pagination",
+  },
+  navigation: {
+    nextEl: ".button-next",
+    prevEl: ".button-prev",
+  },
+  effect: "fade",
+  loop: true,
+  autoplay: {
+    delay: 1500,
+    disableOnInteraction: false,
+  },
+});
 let currentSlide = 1;
 let isPaused = false; // Variable to check if the slideshow is paused
 
@@ -160,253 +221,3 @@ document.querySelectorAll(".zoom-container").forEach((container) => {
 
 // Initialize
 updateZoomClass();
-
-// let currentSlide = 1;
-// let isPaused = false; // Variable to check if the slideshow is paused
-
-// // Function to change the slide
-// const changeSlide = () => {
-//   if (!isPaused) {
-//     // Remove 'can-zoom' class from all slides
-//     // Existing code for removing 'can-zoom' class and setting active slide
-//     document.querySelectorAll(".zoom-container").forEach((container) => {
-//       container.classList.remove("can-zoom");
-//     });
-
-//     const activeSlide = document.getElementById(`s${currentSlide}`);
-//     activeSlide.checked = true;
-
-//     const activeContainer = document.querySelector(
-//       `.zoom-container[data-slide="${currentSlide}"]`
-//     );
-//     if (activeContainer) {
-//       activeContainer.classList.add("can-zoom");
-//     }
-
-//     // Move to the next slide
-//     currentSlide++;
-//     if (currentSlide > 8) {
-//       currentSlide = 1;
-//     }
-//   }
-// };
-
-// // Start the auto-scroll
-// let slideInterval = setInterval(changeSlide, 5000);
-
-// // Pause and resume functions
-// const pauseSlide = () => {
-//   isPaused = true;
-// };
-// const resumeSlide = () => {
-//   isPaused = false;
-// };
-
-// // Event listeners for pausing and resuming on hover
-// document.querySelectorAll(".zoom-container").forEach((container) => {
-//   container.addEventListener("mouseover", pauseSlide);
-//   container.addEventListener("mouseout", resumeSlide);
-// });
-
-// const boxes = document.querySelectorAll(".box");
-// let activeIndex = 1;
-// let isTransitioning = false;
-
-// function updateCurrentImg() {
-//   isTransitioning = true;
-
-//   boxes.forEach((box, index) => {
-//     const isActive = index === activeIndex;
-//     box.classList.toggle("expanded", isActive);
-//     box.classList.toggle("closed", !isActive);
-//   });
-
-//   setTimeout(() => {
-//     isTransitioning = false;
-//   }, 500);
-// }
-
-// function handleArrowKey(event) {
-//   if (isTransitioning) {
-//     return;
-//   }
-
-//   if (event.key === "ArrowRight") {
-//     activeIndex = (activeIndex + 1) % boxes.length;
-//   } else if (event.key === "ArrowLeft") {
-//     activeIndex = (activeIndex - 1 + boxes.length) % boxes.length;
-//   }
-
-//   updateCurrentImg();
-// }
-
-// function handleBoxClick(index) {
-//   if (isTransitioning) {
-//     return;
-//   }
-
-//   if (index === activeIndex && boxes[index].classList.contains("expanded")) {
-//     boxes.forEach((box) => box.classList.remove("closed", "expanded"));
-//     activeIndex = 0;
-//   } else {
-//     activeIndex = index;
-//     updateCurrentImg();
-//   }
-// }
-
-// document.addEventListener("keydown", handleArrowKey);
-
-// updateCurrentImg();
-
-// boxes.forEach((box, index) => {
-//   box.addEventListener("click", () => handleBoxClick(index));
-// });
-
-/*
-inspiration
-https://dribbble.com/shots/4684682-Aquatic-Animals
-*/
-
-// var swiper = new Swiper(".swiper", {
-//   effect: "coverflow",
-//   grabCursor: true,
-//   centeredSlides: true,
-//   coverflowEffect: {
-//     rotate: 0,
-//     stretch: 0,
-//     depth: 100,
-//     modifier: 3,
-//     slideShadows: true,
-//   },
-//   keyboard: {
-//     enabled: true,
-//   },
-//   mousewheel: {
-//     thresholdDelta: 70,
-//   },
-//   loop: true,
-//   pagination: {
-//     el: ".swiper-pagination",
-//     clickable: true,
-//   },
-//   breakpoints: {
-//     640: {
-//       slidesPerView: 2,
-//     },
-//     768: {
-//       slidesPerView: 1,
-//     },
-//     1024: {
-//       slidesPerView: 2,
-//     },
-//     1560: {
-//       slidesPerView: 3,
-//     },
-//   },
-// });
-
-// // Burger menus
-// document.addEventListener("DOMContentLoaded", function () {
-//   // open
-//   const burger = document.querySelectorAll(".navbar-burger");
-//   const menu = document.querySelectorAll(".navbar-menu");
-
-//   if (burger.length && menu.length) {
-//     for (var i = 0; i < burger.length; i++) {
-//       burger[i].addEventListener("click", function () {
-//         for (var j = 0; j < menu.length; j++) {
-//           menu[j].classList.toggle("hidden");
-//         }
-//       });
-//     }
-//   }
-
-//   // close
-//   const close = document.querySelectorAll(".navbar-close");
-//   const backdrop = document.querySelectorAll(".navbar-backdrop");
-
-//   if (close.length) {
-//     for (var i = 0; i < close.length; i++) {
-//       close[i].addEventListener("click", function () {
-//         for (var j = 0; j < menu.length; j++) {
-//           menu[j].classList.toggle("hidden");
-//         }
-//       });
-//     }
-//   }
-
-//   if (backdrop.length) {
-//     for (var i = 0; i < backdrop.length; i++) {
-//       backdrop[i].addEventListener("click", function () {
-//         for (var j = 0; j < menu.length; j++) {
-//           menu[j].classList.toggle("hidden");
-//         }
-//       });
-//     }
-//   }
-// });
-
-// const swiper = new Swiper(".swiper", {
-//   // Optional parameters
-//   direction: "horizontal",
-//   loop: true,
-//   autoplay: {
-//     delay: 2500,
-//     disableOnInteraction: true,
-//   },
-
-//   // If we need pagination
-//   pagination: {
-//     el: ".swiper-pagination",
-//   },
-
-//   // Navigation arrows
-//   navigation: {
-//     nextEl: ".swiper-button-next",
-//     prevEl: ".swiper-button-prev",
-//   },
-
-//   // And if we need scrollbar
-//   scrollbar: {
-//     el: ".swiper-scrollbar",
-//   },
-// });
-
-// var mySwiper = new Swiper(".swiper-container-1", {
-//   // Optional parameters
-//   direction: "horizontal",
-//   loop: false,
-//   direction: "horizontal",
-
-//   // Navigation arrows
-//   navigation: {
-//     nextEl: ".swiper-button-next",
-//     prevEl: ".swiper-button-prev",
-//   },
-
-//   on: {
-//     transitionStart: function () {
-//       var videos = document.querySelectorAll("video");
-//       Array.prototype.forEach.call(videos, function (video) {
-//         video.pause();
-//       });
-//     },
-
-//     transitionEnd: function () {
-//       var activeIndex = this.activeIndex;
-//       var activeSlide =
-//         document.getElementsByClassName("swiper-slide")[activeIndex];
-//       var activeSlideVideo = activeSlide.getElementsByTagName("video")[0];
-//       activeSlideVideo.play();
-//     },
-//   },
-// });
-
-// const openModal = () => {
-//   // document.getElementById("button").classList.add("hidden");
-//   document.getElementById("modal").classList.remove("hidden");
-// };
-// const closeModal = () => {
-//   // document.getElementById("button").classList.remove("hidden");
-//   document.getElementById("modal").classList.add("hidden");
-// };
